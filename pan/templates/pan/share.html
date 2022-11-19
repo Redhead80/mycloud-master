@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcdn.net/ajax/libs/mdb-ui-kit/3.9.0/mdb.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'pan/css/common.css' %}" rel="stylesheet">
+    <title>поделиться</title>
+</head>
+<body class="h-100">
+{% if not expired %}
+    <div class="position-fixed px-4 py-3">
+        <a href="/" class="text-reset"><i class="fas fa-chevron-left me-2"></i>Вернуться на главную страницу</a>
+    </div>
+{% endif %}
+<div id="wrapper" class="d-flex justify-content-center align-items-center h-100">
+    {% if not expired %}
+        <div id="shareCard" class="card" style="width: 18rem">
+            <div class="card-header">
+                <i class="fas fa-cloud" style="color: #9E9E9E"></i>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <h5 class="card-title">{{ file.file_name }}</h5>
+                    <div class="small mb-1">{{ share.expire_time }}</div>
+                    <div class="text-muted small" style="height: 6rem">{{ share.summary }}</div>
+                </div>
+                <div class="d-flex border rounded p-2 mb-2">
+                    <div class="me-2">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-file_default"></use>
+                        </svg>
+                    </div>
+                    <div class="flex-grow-1 text-muted text-truncate" style="font-size: 0.5rem; line-height: 1rem">
+                        <div>{{ file.file_name }}</div>
+                        <div id="size">{{ file.file_size }}</div>
+                    </div>
+                </div>
+                <a class="btn btn-info">загрузить</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+    <div id="toast" class="toast fade hide">
+        <div class="toast-header">
+            <i class="fas fa-check-circle fa-lg text-success"></i>
+            <button type="button" class="ms-auto btn-close" data-mdb-dismiss="toast"></button>
+        </div>
+        <div class="toast-body"></div>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/mdb-ui-kit/3.9.0/mdb.min.js"></script>
+<script src="//at.alicdn.com/t/font_2926309_gvlwiirwihf.js"></script>
+<script src="{% static 'pan/js/utils.js' %}"></script>
+<script src="{% static 'pan/js/config.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        {% if expired %}
+            let dom = `<p>Срок действия файла истек</p><a class="btn btn-light btn-lg shadow-1" href="/">Вернуться на главную страницу</a>`
+            $('#wrapper').html(custom.elEmpty(dom))
+        {% else %}
+            let toast = new custom.Toast($('#toast'))
+            let elem = $('#size')
+            let btn = $('.btn-info')
+
+            elem.text(custom.fileSizeFormat(Number(elem.text())))
+            btn.click(function () {
+                toast.setIcon('fas fa-info-circle text-info')
+                toast.setText('Пожалуйста, подождите минутку')
+                toast.getToast().show()
+                location.href = _urls.fileBlob('{{ file.file_uuid }}')
+            })
+        {% endif %}
+    })
+</script>
+</body>
+</html>

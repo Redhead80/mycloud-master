@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcdn.net/ajax/libs/mdb-ui-kit/3.9.0/mdb.min.css" rel="stylesheet">
+    <title>Сбросить информацию</title>
+</head>
+<body class="h-100">
+<div class="d-flex justify-content-center align-items-center h-100">
+    <section class="text-center">
+        <h3 class="mb-3">
+            {% if auth %}Пароль вашей учетной записи был сброшен. Пожалуйста, внесите изменения вовремя{% else %}Срок действия ссылки истек{% endif %}
+        </h3>
+        <a class="btn btn-dark" href="/">Вернуться на главную страницу</a>
+    </section>
+</div>
+</body>
+</html>

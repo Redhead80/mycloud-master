@@ -1,0 +1,371 @@
+{% extends 'pan/base.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="https://cdn.staticfile.org/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}личная информация{% endblock %}
+
+{% block search %}{% endblock %}
+{% block content %}{#  личная информация  #}
+    <div class="row mx-lg-3">
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">личная информация</h5>
+                </div>
+                <div class="bg-image hover-overlay mt-3 mx-auto">
+                    <img src="{{ user.profile.avatar.url }}" class="rounded-circle"
+                         height="128" width="128" alt="avatar"/>
+                    <a href="javascript:void (0)">
+                        <div class="mask rounded-circle" data-mdb-toggle="modal"
+                             data-mdb-target="#avatarModal"
+                             style="background-color: rgba(0, 0, 0, 0.2); height: 128px; width: 128px;">
+                        </div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <ul class="card-text list-group list-group-flush">
+                        <li class="list-group-item d-flex">
+                            <span class="me-auto">имя пользователя:</span>
+                            <span>{{ user.username }}</span></li>
+                        <li class="list-group-item d-flex">
+                            <span class="me-auto">пол:</span>
+                            <span>{{ user.profile.get_gender_display }}</span>
+                        </li>
+                        <li class="list-group-item d-flex">
+                            <span class="me-auto">роль:</span>
+                            <span>{{ user.profile.role.role_name }}</span>
+                        </li>
+                        <li class="list-group-item d-flex">
+                            <span class="me-auto">электронная почта:</span>
+                            <span>{{ user.email }}</span>
+                        </li>
+                        <li class="list-group-item d-flex">
+                            <span class="me-auto">дата регистрации:</span>
+                            <span>{{ user.date_joined }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Изменить информацию</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs mb-3" id="changeTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="passwordTab" data-mdb-toggle="tab"
+                               href="#passwordTabContent">Поменять пароль</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="otherTab" data-mdb-toggle="tab"
+                               href="#otherTabContent">Другая информация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="proTab" data-mdb-toggle="tab"
+                               href="#proTabContent">данные</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="applyTab" data-mdb-toggle="tab"
+                               href="#applyTabContent">заявка</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="messageTab" data-mdb-toggle="tab"
+                               href="#messageTabContent">сообщение</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="infoContent">
+                        <div class="tab-pane fade show active" id="passwordTabContent">
+                            <form class="row gy-3 needs-validation" id="passwordForm" novalidate>
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="password" id="oldPassword" name="oldPassword"
+                                               class="form-control" minlength="6" maxlength="150" required/>
+                                        <label class="form-label" for="oldPassword">Старый пароль</label>
+                                        <div class="invalid-feedback">
+                                            Длина больше 6 меньше 128
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="password" id="newPassword" name="newPassword"
+                                               class="form-control" minlength="6" maxlength="150" required/>
+                                        <label class="form-label" for="newPassword">Новый пароль</label>
+                                        <div class="invalid-feedback">
+                                            Длина больше 6 меньше 128
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="password" id="confirmPassword" name="confirmPassword"
+                                               class="form-control" minlength="6" maxlength="150" required/>
+                                        <label class="form-label" for="confirmPassword">Подтвердите пароль</label>
+                                        <div class="invalid-feedback">
+                                            Длина больше 6 меньше 128
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary mb-1" id="passwordBtn">确认
+                                    </button>
+                                    <button type="reset" class="btn btn-danger mb-1">отменить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="otherTabContent">
+                            <form class="row gy-3 needs-validations" id="infoForm" novalidate>
+                                <div class="col-12">
+                                    <div class="btn-group shadow-0">
+                                        <input type="radio" class="btn-check" name="gender" id="male" value="1"
+                                               {% if user.profile.gender == '1' %}checked{% endif %}>
+                                        <label class="btn btn-secondary" for="male">муж</label>
+                                        <input type="radio" class="btn-check" name="gender" id="female" value="0"
+                                               {% if user.profile.gender == '0' %}checked{% endif %}>
+                                        <label class="btn btn-secondary" for="female">жен</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-outline">
+                                        <input type="email" id="email" name="email" class="form-control"
+                                               value="{{ user.email }}">
+                                        <label class="form-label">электронная почта</label>
+                                        <div class="invalid-feedback">Пожалуйста, введите адрес электронной почты в правильном формате</div>
+                                    </div>
+                                </div>
+                                <p class="text-muted small">Примечание: Адрес электронной почты используется для сброса пароля, обязательно укажите действительный адрес электронной почты</p>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary mb-1" id="infoBtn">подтвердить</button>
+                                    <button type="reset" class="btn btn-danger mb-1">отменить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="proTabContent">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="lead">Обычный пользователь</p>
+                                    <div class="small">
+                                        <p>Размер хранилища: 5GB</p>
+                                        <p>Ограничение на прослушивание аудио онлайн: не более 20 мин</p>
+                                        <p>Ограничение на просмотр видео онлайн: не более 20 мин</p>
+                                        <p>Ограничение на просмотр изображений в режиме онлайн: не более 20 мин</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="lead">полльзователь</p>
+                                    <div class="small">
+                                        <p>Размер хранилища: 8GB</p>
+                                        <p>Ограничение на прослушивание аудио онлайн: не более 40 мин</p>
+                                        <p>Ограничение на просмотр видео онлайн: не более 40 мин</p>
+                                        <p>Ограничение на просмотр изображений в режиме онлайн: не более 40 мин</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="applyTabContent">
+                            <div class="accordion accordion-flush" id="accordionApply">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" data-mdb-toggle="collapse"
+                                                data-mdb-target="#itemForm">Подать заявку на пользователя
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse show" id="itemForm">
+                                        <div class="accordion-body">
+                                            {% if role == 'common' %}
+                                                {% if applied %}
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <h4 class="small text-muted">Вы подали заявку</h4>
+                                                    </div>
+                                                {% else %}
+                                                    <form id="applyForm">
+                                                        <div class="form-outline mb-2">
+                                                            <input type="hidden" name="way" value="apply">
+                                                            <textarea class="form-control" name="message" rows="5"
+                                                                      required></textarea>
+                                                            <label class="form-label small">Причина подачи заявки</label>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary" id="applyBtn">передать
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                            {% elif role == 'member' %}
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <h4 class="small text-muted">Ваше представление прошло</h4>
+                                                </div>
+                                            {% elif role == 'admin' %}
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <h4 class="small text-muted">Нет необходимости применять</h4>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" data-mdb-toggle="collapse"
+                                                data-mdb-target="#itemRecord">Запись о заявке
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="itemRecord">
+                                        <div class="accordion-body">
+                                            <ul class="list-group list-group-flush">
+                                                {% for r in record %}
+                                                    <li class="list-group-item border-0 d-flex justify-content-between align-items-center">
+                                                        <div class="text-muted">
+                                                            <small>Время создания：{{ r.create_time }}</small><br>
+                                                            <small>Время утверждения：{{ r.update_time }}</small><br>
+                                                            {% if r.state == '1' %}<small>Если заявка одобрена, вам необходимо снова войти в систему</small>{% endif %}
+                                                        </div>
+                                                        {% if r.state == '0' %}
+                                                            <div class="text-info">
+                                                                <span class="me-1">На рассмотрении</span>
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </div>
+                                                        {% elif r.state == '1' %}
+                                                            <div class="text-primary">
+                                                                <span class="me-1">Удачно</span>
+                                                                <i class="fas fa-thumbs-up"></i>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="text-warning">
+                                                                <span class="me-1">Неудачно</span>
+                                                                <i class="fas fa-thumbs-down"></i>
+                                                            </div>
+                                                        {% endif %}
+                                                    </li>
+                                                {% empty %}
+                                                    <p class="text-muted text-center small">Вы не подали заявку</p>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="messageTabContent">
+                            <div class="accordion accordion-flush" id="accordionApply">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" data-mdb-toggle="collapse"
+                                                data-mdb-target="#itemMessage">сообщение
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse show" id="itemMessage">
+                                        <div class="accordion-body">
+                                            <form id="messageForm">
+                                                <div class="form-outline mb-2">
+                                                    <input type="hidden" name="way" value="leave">
+                                                    <textarea class="form-control" name="message" rows="5"
+                                                              required></textarea>
+                                                    <label class="form-label small">напишите комментарий</label>
+                                                </div>
+                                                <button type="button" class="btn btn-primary" id="messageBtn">передать
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" data-mdb-toggle="collapse"
+                                                data-mdb-target="#messageRecord">записи
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="messageRecord">
+                                        <div class="accordion-body">
+                                            <ul class="list-group list-group-flush small">
+                                                {% for m in message %}
+                                                    <li class="list-group-item">
+                                                        <div class="mb-1">{{ m.content }}</div>
+                                                        <div class="text-muted">{{ m.create_time }}</div>
+                                                    </li>
+                                                {% empty %}
+                                                    <p class="text-muted text-center">Вы еще не оставили сообщения</p>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}{# 个人данные #}
+
+{% block componets %}{# Изменить аватар #}
+    <div class="modal fade" id="avatarModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить аватар</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <img class="d-block mw-100" id="avatar" src="{{ user.profile.avatar.url }}" alt="avatar">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="preview rounded-circle overflow-hidden m-auto"
+                                 style="width: 200px; height: 200px"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 text-md-start mb-1">
+                            <button type="button" class="btn btn-light shadow-0" id="CropUpload"
+                                    data-mdb-toggle="tooltip"
+                                    data-mdb-placement="bottom" title="Загрузить изображение">
+                                <i class="fas fa-file-upload"></i>
+                            </button>
+                            <input class="d-none" type="file" id="uploadInput" accept="image/*">
+                        </div>
+                        <div class="col-md-6 mb-1">
+                            <button type="button" class="btn btn-light shadow-0" id="CropRotateRight"
+                                    data-mdb-toggle="tooltip"
+                                    data-mdb-placement="bottom" title="повернуть направо">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button type="button" class="btn btn-light shadow-0" id="CropRotateLeft"
+                                    data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="повернуть налево">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button type="button" class="btn btn-light shadow-0" id="CropZoomIn"
+                                    data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="увеличить">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-light shadow-0" id="CropZoomOut"
+                                    data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="уменьшить">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-4 text-md-end mb-1">
+                            <button type="button" class="btn btn-light shadow-0" id="CropReset"
+                                    data-mdb-toggle="tooltip" data-mdb-placement="bottom" title="сброс">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                            <button type="button" class="btn btn-light shadow-0" id="CropConfirm"
+                                    data-mdb-toggle="tooltip"
+                                    data-mdb-placement="bottom" title="подтвердить">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}{# Изменить аватар #}
+
+{% block scripts %}
+    <script src="https://cdn.staticfile.org/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="{% static 'pan/js/profile.js' %}"></script>
+{% endblock %}
