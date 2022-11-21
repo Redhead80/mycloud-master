@@ -8,7 +8,7 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/mdb-ui-kit/3.9.0/mdb.min.css" rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="{% static 'pan/css/common.css' %}" rel="stylesheet">
-    <title>главная страница - Tiny Cloud</title>
+    <title>главная страница - My Cloud</title>
     <style>
         #introCarousel,
         .carousel-inner,
@@ -74,7 +74,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="{% url 'pan:profile' %}">личные данные</a>
+                            <a class="dropdown-item" href="{% url 'pan:profile' %}">Личные данные</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{% url 'pan:logout' %}">Выйти из системы</a>
@@ -121,7 +121,7 @@
                                             <div id="fileSize"></div>
                                         </div>
                                     </div>
-                                    <a class="btn btn-info">下载</a>
+                                    <a class="btn btn-info">Загрузить</a>
                                 </div>
                             </div>
                             <div id="btnToggle" class="text-white text-center">
@@ -241,7 +241,7 @@
                                                    class="form-control" minlength="6" maxlength="128" required/>
                                             <label class="form-label" for="registerPassword">пароль</label>
                                             <div class="invalid-feedback">
-                                                Требуется  длина больше 6 и меньше 128
+                                                Требуется длина больше 6 и меньше 128
                                             </div>
                                         </div>
                                     </div>
@@ -251,7 +251,7 @@
                                                    class="form-control" minlength="6" maxlength="128" required/>
                                             <label class="form-label" for="confirmPassword">Подтвердите пароль</label>
                                             <div class="invalid-feedback">
-                                                Требуется  длина больше 6 и меньше 128
+                                                Требуется длина больше 6 и меньше 128
                                             </div>
                                         </div>
                                     </div>
