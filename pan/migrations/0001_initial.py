@@ -181,7 +181,7 @@ class Migration(migrations.Migration):
                 ('update_time', models.DateTimeField(auto_now=True, verbose_name='Время обновления')),
                 ('remark', models.TextField(blank=True, verbose_name='Замечания')),
                 ('action', models.CharField(choices=[('0', 'сообщение'), ('1', 'заявка')], max_length=1, verbose_name='Действие')),
-                ('state', models.CharField(choices=[('0', 'Не одобрено'), ('1', 'Одобрено'), ('2', 'Неудачо')], default='0', max_length=1, verbose_name='Статус')),
+                ('state', models.CharField(choices=[('0', 'Не одобрено'), ('1', 'Одобрено'), ('2', 'Неудачно')], default='0', max_length=1, verbose_name='Статус')),
                 ('content', models.TextField(verbose_name='Содержание')),
                 ('create_by', models.ForeignKey(blank=True, null=True, on_delete=models.SET(pan.models.get_deleted_user), related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Создан')),
                 ('update_by', models.ForeignKey(blank=True, null=True, on_delete=models.SET(pan.models.get_deleted_user), related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Обновлён')),
