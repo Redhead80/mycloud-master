@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-from pan.utils import get_uuid, get_unique_filename
+from .utils import get_uuid, get_unique_filename
 
 
 # Значение заполнения, полученное после удаления соответствующего поля

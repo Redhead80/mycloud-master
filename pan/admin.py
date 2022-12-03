@@ -1,9 +1,9 @@
 from django.contrib import admin, messages
 from django.contrib.admin.models import LogEntry
 from django.utils.translation import ngettext
-from pan.models import (Profile, Role, Limit, RoleLimit,
-                        FileType, GenericFile, UserFile, UserDir, FileShare, ShareRecord,
-                        Notice, Message, UserMessage, UserApproval, UserLog)
+from .models import (Profile, Role, Limit, RoleLimit,
+                     FileType, GenericFile, UserFile, UserDir, FileShare, ShareRecord,
+                     Notice, Message, UserMessage, UserApproval, UserLog)
 
 
 # Возобновить действие

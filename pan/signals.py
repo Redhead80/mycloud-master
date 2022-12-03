@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 
 from httpagentparser import simple_detect
 
-from pan.models import UserFile, UserDir, UserMessage, UserApproval, RoleLimit, UserLog, Profile, Role
-from pan.utils import get_secret_path
+from .models import UserFile, UserDir, UserMessage, UserApproval, RoleLimit, UserLog, Profile, Role
+from .utils import get_secret_path
 
 
 # Первое создание пользователя и создание связанного корневого каталога

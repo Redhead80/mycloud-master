@@ -7,4 +7,4 @@ class PanConfig(AppConfig):
     verbose_name = 'Облачный диск'
 
     def ready(self):
-        import pan.signals
+        pass

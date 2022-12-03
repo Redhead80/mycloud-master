@@ -18,12 +18,12 @@ from django.views.generic import View, TemplateView, RedirectView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
-from pan.forms import UserBaseForm, InfoForm, AvatarForm, PasswordForm
-from pan.models import (GenericFile, UserFile, UserDir, FileShare, ShareRecord,
+from .forms import UserBaseForm, InfoForm, AvatarForm, PasswordForm
+from .models import (GenericFile, UserFile, UserDir, FileShare, ShareRecord,
                         FileType, UserApproval, UserMessage, Notice)
-from pan.paginations import NoticeResultSetPagination
-from pan.serializers import FileSerializer, FileShareSerializer, FolderSerializer, NoticeSerializer
-from pan.utils import AjaxObj, get_key_signature, get_dir_size, make_archive_bytes, file_size_format
+from .paginations import NoticeResultSetPagination
+from .serializers import FileSerializer, FileShareSerializer, FolderSerializer, NoticeSerializer
+from .utils import AjaxObj, get_key_signature, get_dir_size, make_archive_bytes, file_size_format
 
 
 class IndexView(TemplateView):

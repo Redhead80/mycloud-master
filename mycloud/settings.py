@@ -25,14 +25,14 @@ SECRET_KEY = 'django-insecure-wx8cyt+)#o!8f&7rrz!$5-s$*e_kciv44gycm!l0y9p83js83j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-EMAIL_HOST = 'smtp.qq.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = '******'
-EMAIL_HOST_PASSWORD = '******'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 # Application definition
 
@@ -45,9 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pan.apps.PanConfig',
+    'psycopg2',
     'corsheaders',
     'rest_framework',
-    # 'debug_toolbar',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -55,11 +56,11 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'mycloud.urls'
@@ -73,6 +74,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -87,12 +89,12 @@ WSGI_APPLICATION = 'mycloud.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cloud',
         'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'USER': '***',
-        'PASSWORD': '******',
+        'PORT': '5432',
+        'USER': 'postgres',
+        'PASSWORD': '7700009930q',
     }
 }
 
@@ -140,7 +142,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_URL = '/'
+LOGIN_URL = '/accounts/login/'
 
 # Upload avatar limit
 MAX_AVATAR_SIZE = 3145728

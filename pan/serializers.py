@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField, DateTimeField
 
-from pan.models import GenericFile, FileShare, Notice
+from .models import GenericFile, FileShare, Notice
 
 
 class FileSerializer(ModelSerializer):

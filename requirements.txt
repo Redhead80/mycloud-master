@@ -4,7 +4,7 @@ django-cors-headers==3.13.0
 django-debug-toolbar==3.7.0
 django-debug-toolbar-request-history==0.1.4
 django-extensions==3.2.1
-django-simpleui==2022.7.29
+django-simpleui==2022.11.30
 djangorestframework==3.14.0
 httpagentparser==1.9.5
 mysqlclient==2.1.1
@@ -12,3 +12,4 @@ Pillow==9.3.0
 pytz==2022.6
 sqlparse==0.4.3
 typing-extensions==4.4.0
+psycopg2-binary==2.9.5
